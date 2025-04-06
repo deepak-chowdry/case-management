@@ -1,5 +1,4 @@
 import NewTimeline from "@/components/NewTimeline";
-import React from "react";
 
 const NewTimelinePage = () => {
   return (

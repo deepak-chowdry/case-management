@@ -1,15 +1,10 @@
 import {
   BriefcaseBusiness,
-  Calendar,
-  Calendar1,
   HelpCircle,
-  Home,
-  Inbox,
   IndianRupee,
   LayoutDashboard,
-  Search,
   Settings,
-  Users2,
+  Users2
 } from "lucide-react";
 
 import {
@@ -23,8 +18,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 // Menu items.
 const main = [

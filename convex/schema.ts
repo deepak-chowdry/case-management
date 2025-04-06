@@ -15,8 +15,6 @@ export default defineSchema({
     // User who created the timeline (assuming you have authentication)
     createdBy: v.optional(v.string()),
 
-
-
     // Relationships
     fileIds: v.array(v.id("files")),
   }),

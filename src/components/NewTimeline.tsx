@@ -1,16 +1,16 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Progress } from "@/components/ui/progress";
 import {
   Select,
   SelectContent,
@@ -18,27 +18,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTimeline } from "@/hooks/useTimeline";
+import { useEdgeStore } from "@/lib/edgestore";
 import {
+  AlertCircle,
   CheckIcon,
   File,
   FilePlus,
   Upload,
   X,
-  AlertCircle,
 } from "lucide-react";
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
+  TableRow
 } from "./ui/table";
-import { useEdgeStore } from "@/lib/edgestore";
-import { Progress } from "@/components/ui/progress";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useTimeline } from "@/hooks/useTimeline";
 
 const NewTimeline = () => {
   const [currentStep, setCurrentStep] = useState(1);

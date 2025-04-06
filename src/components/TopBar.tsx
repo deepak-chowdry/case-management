@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from "react";
-import { SidebarTrigger } from "./ui/sidebar";
-import { Button } from "./ui/button";
+import { Separator } from "@/components/ui/separator";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
+import { Button } from "./ui/button";
+import { SidebarTrigger } from "./ui/sidebar";
 
 const TopBar = () => {
   const { setTheme } = useTheme();

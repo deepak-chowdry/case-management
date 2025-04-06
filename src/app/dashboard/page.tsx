@@ -1,5 +1,4 @@
 import TimelineDashboard from "@/components/TimelineDashboard";
-import React from "react";
 
 const DashboardPage = () => {
   return (

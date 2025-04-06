@@ -1,17 +1,23 @@
 "use client";
+import { useTimeline } from "@/hooks/useTimeline";
 import {
   BriefcaseBusiness,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-  Search,
+  Search
 } from "lucide-react";
-import React from "react";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import {
   Table,
   TableBody,
@@ -20,14 +26,6 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
-import { useTimeline } from "@/hooks/useTimeline";
 
 const TimelineDashboard = () => {
   const router = useRouter();
