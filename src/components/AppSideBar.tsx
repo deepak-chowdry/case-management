@@ -4,12 +4,13 @@ import {
   IndianRupee,
   LayoutDashboard,
   Settings,
-  Users2
+  Users2,
 } from "lucide-react";
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -18,29 +19,29 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Image from "next/image";
+import { SelectedTeamSwitcher, UserButton } from "@stackframe/stack";
 import Link from "next/link";
 
 // Menu items.
 const main = [
   {
     title: "Dashboard",
-    url: "#",
+    url: "/dashboard",
     icon: LayoutDashboard,
   },
   {
     title: "Timeline",
-    url: "#",
+    url: "/dashboard/timeline",
     icon: BriefcaseBusiness,
   },
   {
     title: "Teams",
-    url: "#",
+    url: "/dashboard/teams",
     icon: Users2,
   },
   {
     title: "Billing",
-    url: "#",
+    url: "/dashboard/billing",
     icon: IndianRupee,
   },
 ];
@@ -62,7 +63,8 @@ const AppSidebar = () => {
   return (
     <Sidebar>
       <SidebarHeader>
-        <Image src={"/AJ_logo.svg"} alt="" width={100} height={100} />
+        {/* <Image src={"/AJ_logo.svg"} alt="" width={100} height={100} /> */}
+        <SelectedTeamSwitcher />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -100,6 +102,9 @@ const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <UserButton showUserInfo />
+      </SidebarFooter>
     </Sidebar>
   );
 };

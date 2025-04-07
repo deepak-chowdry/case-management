@@ -1,8 +1,10 @@
 import { ConvexClientProvider } from "@/components/ConvexClientProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import { StackProvider, StackTheme } from "@stackframe/stack";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { stackServerApp } from "../stack";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,18 +33,22 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         cz-shortcut-listen="true"
       >
-        <ConvexClientProvider>
-          <EdgeStoreProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </EdgeStoreProvider>
-        </ConvexClientProvider>
+        <StackProvider app={stackServerApp}>
+          <StackTheme>
+            <ConvexClientProvider>
+              <EdgeStoreProvider>
+                <ThemeProvider
+                  attribute="class"
+                  defaultTheme="system"
+                  enableSystem
+                  disableTransitionOnChange
+                >
+                  {children}
+                </ThemeProvider>
+              </EdgeStoreProvider>
+            </ConvexClientProvider>
+          </StackTheme>
+        </StackProvider>
       </body>
     </html>
   );

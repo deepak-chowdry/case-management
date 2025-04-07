@@ -1,14 +1,12 @@
 "use client";
-import { useTimeline } from "@/hooks/useTimeline";
+import { Team, useUser } from "@stackframe/stack";
 import {
   BriefcaseBusiness,
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-  Search
+  Search,
+  Users
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import {
@@ -27,16 +25,29 @@ import {
   TableRow,
 } from "./ui/table";
 
-const TimelineDashboard = () => {
+const TeamsDashboard = () => {
   const router = useRouter();
-  const cases: any = [];
-  const { allTimelines } = useTimeline();
+  const user = useUser({ or: "redirect" });
+  const allTeams = user.useTeams();
+
+  const [teams, setTeams] = useState<Team[]>([]);
+  //   const [members, setmembers] = useState(second);
+
+  useEffect(() => {
+    console.log(allTeams);
+    setTeams(allTeams);
+    // const allUsers = allTeams[0].listUsers();
+    // allUsers.then((data) => {
+    //   console.log(data);
+    // });
+  }, []);
+
   return (
     <div className="min-h-screen">
       <div className="flex-1 mx-auto">
         <div className="space-y-6">
           <div>
-            <h1 className="text-2xl font-bold">My Timelines</h1>
+            <h1 className="text-2xl font-bold">My Teams</h1>
             <p className="text-gray-500">You are all set to start your day.</p>
           </div>
 
@@ -62,11 +73,11 @@ const TimelineDashboard = () => {
                 </div>
               </div>
               <Button
-                onClick={() => router.push("/dashboard/newtimeline")}
+                // onClick={() => router.push("/dashboard/newtimeline")}
                 variant="outline"
               >
-                <BriefcaseBusiness className="h-4 w-4" strokeWidth={1.5} />
-                <span className="hidden md:flex">New Timeline</span>
+                <Users className="h-4 w-4" strokeWidth={1.5} />
+                <span className="hidden md:flex">New Team</span>
               </Button>
             </div>
 
@@ -76,16 +87,13 @@ const TimelineDashboard = () => {
                 <TableHeader className="border-b rounded-xl">
                   <TableRow>
                     <TableHead className="text-xs text-muted-foreground">
-                      Case Title
+                      Team name
                     </TableHead>
                     <TableHead className="text-xs text-muted-foreground">
-                      Type
+                      Owner
                     </TableHead>
                     <TableHead className="text-xs text-muted-foreground">
-                      Files
-                    </TableHead>
-                    <TableHead className="text-xs text-muted-foreground">
-                      Created
+                      Members
                     </TableHead>
                     <TableHead className="text-xs text-muted-foreground text-right">
                       Actions
@@ -93,13 +101,13 @@ const TimelineDashboard = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {allTimelines === undefined ? (
+                  {allTeams === undefined ? (
                     <TableRow>
                       <TableCell colSpan={5} className="h-24 text-center">
                         Loading cases...
                       </TableCell>
                     </TableRow>
-                  ) : allTimelines === null ? (
+                  ) : allTeams === null ? (
                     <TableRow>
                       <TableCell
                         colSpan={5}
@@ -108,7 +116,7 @@ const TimelineDashboard = () => {
                         Error loading cases
                       </TableCell>
                     </TableRow>
-                  ) : allTimelines?.length === 0 ? (
+                  ) : teams?.length === 0 ? (
                     <TableRow>
                       <TableCell
                         colSpan={5}
@@ -138,37 +146,21 @@ const TimelineDashboard = () => {
                       </TableCell>
                     </TableRow>
                   ) : (
-                    allTimelines?.map((timeline: any) => (
+                    teams?.map((team: any) => (
                       <TableRow
-                        key={timeline._id}
+                        key={team.id}
                         className="cursor-pointer transition-colors"
-                        onClick={() =>
-                          router.push(`/dashboard/timeline/${timeline._id}`)
-                        }
+                        // onClick={() =>
+                        //   router.push(`/dashboard/team/${team._id}`)
+                        // }
                       >
-                        <TableCell className="font-medium">
-                          {timeline.name}
+                        <TableCell className="text-xs">
+                          {team.displayName}
                         </TableCell>
-                        <TableCell>{timeline.areaOfLaw}</TableCell>
-                        <TableCell>
-                          {/* <span
-                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                              timeline.status === "pending"
-                                ? "bg-yellow-100 text-yellow-800"
-                                : "bg-green-100 text-green-800"
-                            }`}
-                          >
-                            {timeline.status}
-                          </span> */}
-                          <span>{timeline.files.length}</span>
-                        </TableCell>
-                        <TableCell>
-                          {new Date(timeline.createdAt).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button variant="ghost" size="sm">
-                            View
-                          </Button>
+                        <TableCell className="text-xs">Deepak</TableCell>
+                        <TableCell className="text-xs">2</TableCell>
+                        <TableCell className="text-xs text-end">
+                          <Button variant="ghost">Manage</Button>
                         </TableCell>
                       </TableRow>
                     ))
@@ -176,56 +168,6 @@ const TimelineDashboard = () => {
                 </TableBody>
               </Table>
             </div>
-
-            {/* Footer */}
-            <div className="flex flex-col md:flex-row gap-3 justify-between items-center mt-4 text-sm text-gray-500">
-              <div className="flex items-center justify-between gap-4 w-full md:w-1/2">
-                <div>
-                  <p className="text-xs md:text-sm">0 of 0 row(s) selected.</p>
-                </div>
-                <div className="flex items-center gap-1">
-                  <p className="text-xs md:text-sm"> Rows per page</p>
-                  <Select defaultValue="10">
-                    <SelectTrigger className="w-20 h-8">
-                      <SelectValue placeholder="10" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="10">10</SelectItem>
-                      <SelectItem value="20">20</SelectItem>
-                      <SelectItem value="50">50</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="flex items-center gap-1">
-                <div>Page 1 of 0</div>
-
-                <div className="flex items-center">
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <ChevronsLeft className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                    <ChevronsRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center text-sm text-gray-500">
-            <p>
-              Note: Your data is secure and will not be used for model training.
-            </p>
-            <p>
-              It can be removed at any time upon request or once the job is
-              complete.
-            </p>
           </div>
         </div>
       </div>
@@ -233,4 +175,4 @@ const TimelineDashboard = () => {
   );
 };
 
-export default TimelineDashboard;
+export default TeamsDashboard;
